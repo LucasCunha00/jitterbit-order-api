@@ -15,7 +15,14 @@ app.listen(PORT, () => {
 });
 
 app.post("/order", (req, res) => {
+
   const order = req.body;
+
+  if (!order.numeroPedido || !order.valorTotal || !order.items) {
+    return res.status(400).json({
+      error: "Dados do pedido inválidos"
+    });
+  }
 
   const mappedOrder = {
     orderId: order.numeroPedido,
@@ -31,6 +38,7 @@ app.post("/order", (req, res) => {
   orders.push(mappedOrder);
 
   res.status(201).json(mappedOrder);
+
 });
 
 app.get("/order/list", (req, res) => {
