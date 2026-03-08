@@ -33,6 +33,10 @@ app.post("/order", (req, res) => {
   res.status(201).json(mappedOrder);
 });
 
+app.get("/order/list", (req, res) => {
+  res.status(200).json(orders);
+});
+
 app.get("/order/:orderId", (req, res) => {
   const { orderId } = req.params;
 
@@ -43,4 +47,18 @@ app.get("/order/:orderId", (req, res) => {
   }
 
   res.status(200).json(order);
+});
+
+app.delete("/order/:orderId", (req, res) => {
+  const { orderId } = req.params;
+
+  const index = orders.findIndex(order => order.orderId === orderId);
+
+  if (index === -1) {
+    return res.status(404).json({ error: "Pedido não encontrado" });
+  }
+
+  orders.splice(index, 1);
+
+  res.status(200).json({ message: "Pedido deletado com sucesso" });
 });
