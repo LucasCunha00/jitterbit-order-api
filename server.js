@@ -70,3 +70,9 @@ app.delete("/order/:orderId", (req, res) => {
 
   res.status(200).json({ message: "Pedido deletado com sucesso" });
 });
+
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Rota não encontrada"
+  });
+});
